@@ -1,0 +1,48 @@
+
+<div class="left">
+<h2> <%= @group.name %> </h2>
+<h3><%= @group.description %></h3>
+
+<h3>Created By: <%= @group.user.first_name %></h3>
+
+
+Members in this group:
+<% if @group.user_members %>
+  <% @group.user_members.each do |member| %>
+    <p><%= member.first_name %> <%= member.last_name %></p>
+<% end %>
+<% end %>
+
+
+<% if current_user == @group.user %>
+  <form action="/groups/<%= @group.id %>" method="post">
+      <input type="hidden" name="authenticity_token" value="<% form_authenticity_token %>">
+      <input type="hidden" name="_method" value="delete">
+      <input class="link" type="submit" name="" value="Delete">
+  </form></td>
+<% end %>
+
+<% if @group.user_members.include?(current_user) %>
+    <td><form action="/groups/<%= @group.id %>/member" method="post">
+        <input type="hidden" name="authenticity_token" value="<% form_authenticity_token %>">
+        <input type="hidden" name="_method" value="delete">
+        <input class="link" type="submit" name="" value="Leave Group">
+    </form></td>
+
+<% else %>
+  <td><form action="/groups/<%= @group.id %>/member" method="get">
+      <input type="hidden" name="authenticity_token" value="<% form_authenticity_token %>">
+      <input class="link" type="submit" name="" value="Join Group">
+  </form></td>
+<% end %>
+</div>
+
+<div class="right">
+
+  <a href="/groups">Groups Dashboard</a>
+  <form action="/sessions/<%= current_user.id %>" method="post">
+  <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+  <input type="hidden" name="_method" value="delete">
+  <input type="submit" value="Log Out">
+</form>
+</div>

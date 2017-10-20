@@ -1,0 +1,36 @@
+
+<div class="left">
+  <h1>Welcome <%= current_user.first_name %> <%= current_user.last_name %>!</h1>
+  <form action="/sessions/<%= current_user.id %>" method="post">
+  <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+  <input type="hidden" name="_method" value="delete">
+  <input type="submit" value="Log Out">
+</form>
+  <p>Here are the organizations you may join:</p>
+
+  <% @groups.each do |group| %>
+  <br>
+  <a href="/groups/<%= group.id %>"><%= group.name %></a>
+  <br>
+  <p>Members: <%= group.members.count %></p>
+  <%= group.description %>
+  <br>
+  ---------------------------------
+  <% end %>
+</div>
+
+<div class="right">
+  <h3>Create an Organization</h3>
+    <form action="/groups" method="post">
+        <input type="hidden" name="authenticity_token" value="<% form_authenticity_token %>">
+            <label for="group[name]">Name:</label> <input type="text" name="group[name]" value=""><br>
+            <label for="group[description]">Description:</label> <input type="textarea" name="group[description]" value=""><br><br>
+        <input class="function" type="submit" name="" value="Add Org"><br>
+    </form>
+</div>
+<% if flash[:errors] %>
+    <% flash[:errors].each do |f| %>
+        <p> <%= f %> </p>
+    <% end %>
+    <% flash.clear %>
+<% end %>

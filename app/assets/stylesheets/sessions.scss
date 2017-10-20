@@ -1,0 +1,14 @@
+// Place all the styles related to the Sessions controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+.left{
+  display: inline-block;
+  align-content: left;
+  border: 2px solid black;
+}
+.right{
+  display: inline-block;
+  border: 2px solid black;
+  position: relative;
+  margin-left: 10px;
+}
